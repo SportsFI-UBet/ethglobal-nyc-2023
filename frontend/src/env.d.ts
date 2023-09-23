@@ -2,5 +2,6 @@
 /// <reference types="vite/client" />
 
 interface ImportMetaEnv {
-  VITE_PRIvY_APP_ID?: string;
+  VITE_PRIVY_APP_ID?: string;
+  VITE_LOGO?: string;
 }

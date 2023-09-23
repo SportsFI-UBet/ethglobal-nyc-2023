@@ -1,11 +1,32 @@
-import { useState } from "react";
+import React from "react";
 import reactLogo from "./assets/react.svg";
 import viteLogo from "/vite.svg";
 import "./App.css";
+import { PrivyProvider, User, usePrivy } from "@privy-io/react-auth";
+import { usePrivySmartAccount } from "@zerodev/privy";
 
-function App() {
-  const [count, setCount] = useState(0);
+const MainPage: React.FC = () => {
+  // const smartAccount = usePrivySmartAccount();
+  const smartAccount = usePrivy();
 
+  const address = smartAccount.user?.wallet?.address;
+  return (
+    <>
+      {!smartAccount.authenticated && (
+        <button onClick={smartAccount.login}>Login</button>
+      )}
+      {smartAccount.ready && smartAccount.authenticated && (
+        <>
+          <div>Authenticated!</div>
+          <button onClick={smartAccount.logout}>Logout</button>
+        </>
+      )}
+      {!!address && <div>Address {address}</div>}
+    </>
+  );
+};
+
+const Header: React.FC = () => {
   return (
     <>
       <div>
@@ -16,18 +37,38 @@ function App() {
           <img src={reactLogo} className="logo react" alt="React logo" />
         </a>
       </div>
-      <h1>Vite + React</h1>
-      <div className="card">
-        <button onClick={() => setCount((count) => count + 1)}>
-          count is {count}
-        </button>
-        <p>
-          Edit <code>src/App.tsx</code> and save to test HMR
-        </p>
-      </div>
-      <p className="read-the-docs">
-        Click on the Vite and React logos to learn more
-      </p>
+    </>
+  );
+};
+
+// This method will be passed to the PrivyProvider as a callback
+// that runs after successful login.
+const handleLogin = (user: User) => {
+  console.log(`User ${user.id} logged in!`);
+};
+
+function App() {
+  return (
+    <>
+      <Header></Header>
+      <PrivyProvider
+        appId={import.meta.env.VITE_PRIVY_APP_ID ?? "BORK"}
+        onSuccess={handleLogin}
+        config={{
+          loginMethods: ["email", "wallet", "google", "twitter"],
+          appearance: {
+            theme: "light",
+            accentColor: "#676FFF",
+            logo: import.meta.env.VITE_LOGO,
+            showWalletLoginFirst: false,
+          },
+          fiatOnRamp: {
+            useSandbox: true,
+          },
+        }}
+      >
+        <MainPage></MainPage>
+      </PrivyProvider>
     </>
   );
 }
