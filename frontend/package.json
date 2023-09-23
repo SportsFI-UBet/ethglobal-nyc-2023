@@ -23,8 +23,7 @@
     "preview": "vite preview",
     "format": "prettier -cw .",
     "lint": "eslint . --ext ts,tsx --report-unused-disable-directives --max-warnings 0",
-    "test": "vitest run",
-    "test:watch": "vitest watch"
+    "abis": "wagmi generate"
   },
   "devDependencies": {
     "@julr/vite-plugin-validate-env": "^0.2.4",
@@ -36,6 +35,7 @@
     "@typescript-eslint/eslint-plugin": "^6.7.2",
     "@typescript-eslint/parser": "^6.5.0",
     "@vitejs/plugin-react": "^4.0.4",
+    "@wagmi/cli": "^1.5.1",
     "eslint": "^8.36.0",
     "eslint-config-prettier": "^9.0.0",
     "eslint-import-resolver-typescript": "^3.6.0",
