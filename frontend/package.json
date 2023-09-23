@@ -3,6 +3,7 @@
   "version": "0.1.0",
   "private": true,
   "target": "browser",
+  "type": "module",
   "dependencies": {
     "@wagmi/core": "^1.4.1",
     "lodash.clonedeep": "^4.5.0",
@@ -14,10 +15,10 @@
   "scripts": {
     "compile": "yarn tsc",
     "start": "vite",
-    "build": "yarn tsc && vite build",
+    "build": "tsc && vite build",
     "preview": "vite preview",
     "format": "prettier -cw .",
-    "lint": "yarn codegen && eslint .",
+    "lint": "eslint . --ext ts,tsx --report-unused-disable-directives --max-warnings 0",
     "test": "vitest run",
     "test:watch": "vitest watch"
   },
