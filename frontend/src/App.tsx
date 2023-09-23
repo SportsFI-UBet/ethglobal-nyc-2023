@@ -2,8 +2,24 @@ import React from "react";
 import reactLogo from "./assets/react.svg";
 import viteLogo from "/vite.svg";
 import "./App.css";
-import { PrivyProvider, User, usePrivy } from "@privy-io/react-auth";
+import { PrivyProvider, User, PrivyClientConfig } from "@privy-io/react-auth";
 import { ZeroDevProvider, usePrivySmartAccount } from "@zerodev/privy";
+
+import { PrivyWagmiConnector } from "@privy-io/wagmi-connector";
+// You can import additional chains from 'wagmi/chains'
+// https://wagmi.sh/react/chains
+import { polygonMumbai } from "@wagmi/chains";
+import { configureChains } from "wagmi";
+// You may replace this with your preferred providers
+// https://wagmi.sh/react/providers/configuring-chains#multiple-providers
+import { publicProvider } from "wagmi/providers/public";
+
+// Replace the chains and providers with the ones used by your app.
+// https://wagmi.sh/react/providers/configuring-chains
+const configureChainsConfig = configureChains(
+  [polygonMumbai],
+  [publicProvider()]
+);
 
 const MainPage: React.FC = () => {
   const account = usePrivySmartAccount();
@@ -11,9 +27,7 @@ const MainPage: React.FC = () => {
   const address = account.user?.wallet?.address;
   return (
     <>
-      {!account.authenticated && (
-        <button onClick={account.login}>Login</button>
-      )}
+      {!account.authenticated && <button onClick={account.login}>Login</button>}
       {account.ready && account.authenticated && (
         <>
           <div>Authenticated!</div>
@@ -40,10 +54,25 @@ const Header: React.FC = () => {
   );
 };
 
-// This method will be passed to the PrivyProvider as a callback
-// that runs after successful login.
 const handleLogin = (user: User) => {
   console.log(`User ${user.id} logged in!`);
+};
+
+const privyClientConfig: PrivyClientConfig = {
+  loginMethods: ["email", "wallet", "google", "twitter"],
+  appearance: {
+    theme: "light",
+    accentColor: "#676FFF",
+    logo: import.meta.env.VITE_LOGO,
+    showWalletLoginFirst: false,
+  },
+  fiatOnRamp: {
+    useSandbox: true,
+  },
+  embeddedWallets: {
+    createOnLogin: "users-without-wallets",
+    noPromptOnSignature: false,
+  },
 };
 
 function App() {
@@ -56,24 +85,11 @@ function App() {
         <PrivyProvider
           appId={import.meta.env.VITE_PRIVY_APP_ID ?? "BORK"}
           onSuccess={handleLogin}
-          config={{
-            loginMethods: ["email", "wallet", "google", "twitter"],
-            appearance: {
-              theme: "light",
-              accentColor: "#676FFF",
-              logo: import.meta.env.VITE_LOGO,
-              showWalletLoginFirst: false,
-            },
-            fiatOnRamp: {
-              useSandbox: true,
-            },
-            embeddedWallets: {
-              createOnLogin: "users-without-wallets",
-              noPromptOnSignature: false,
-            },
-          }}
+          config={privyClientConfig}
         >
-          <MainPage></MainPage>
+          <PrivyWagmiConnector wagmiChainsConfig={configureChainsConfig}>
+            <MainPage />
+          </PrivyWagmiConnector>
         </PrivyProvider>
       </ZeroDevProvider>
     </>

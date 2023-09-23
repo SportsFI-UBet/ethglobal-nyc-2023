@@ -1478,6 +1478,19 @@ __metadata:
   languageName: node
   linkType: hard
 
+"@privy-io/wagmi-connector@npm:^0.1.4":
+  version: 0.1.4
+  resolution: "@privy-io/wagmi-connector@npm:0.1.4"
+  peerDependencies:
+    "@privy-io/react-auth": ^1.33.0
+    react: ^18
+    react-dom: ^18
+    viem: ">=0.3.35"
+    wagmi: ">=1 <2"
+  checksum: 27fb6a20eefe325b0a0fb45df2f6475dc366e4f82fd456110821f4214d2f48c15f55aaf6646920dca4093a7f2f26f713a43f2599d823b233a62df40a92d519fe
+  languageName: node
+  linkType: hard
+
 "@rollup/plugin-inject@npm:^5.0.3":
   version: 5.0.3
   resolution: "@rollup/plugin-inject@npm:5.0.3"
@@ -2208,6 +2221,18 @@ __metadata:
     loupe: ^2.3.6
     pretty-format: ^29.5.0
   checksum: 55081528a475413759bf752ec084ccfc013e1f549c4f9523535034c86aab6d2f8711ac44d462817d01d3ccb1608f9150809a94896a681be8602d78554b162037
+  languageName: node
+  linkType: hard
+
+"@wagmi/chains@npm:^1.8.0":
+  version: 1.8.0
+  resolution: "@wagmi/chains@npm:1.8.0"
+  peerDependencies:
+    typescript: ">=5.0.4"
+  peerDependenciesMeta:
+    typescript:
+      optional: true
+  checksum: 58747962140d85fa2e2d54369efbfb0e281315bdd858f0f39b13b5a8f10fa0a5fbad8e2ac7d9f9fd2692f6a650c84a8a01abea300716802c2c1e028f6c8a73ae
   languageName: node
   linkType: hard
 
@@ -4899,6 +4924,7 @@ __metadata:
   dependencies:
     "@julr/vite-plugin-validate-env": ^0.2.4
     "@privy-io/react-auth": ^1.40.3
+    "@privy-io/wagmi-connector": ^0.1.4
     "@tanstack/react-query": ^4.24.4
     "@types/lodash": ^4.14.187
     "@types/node": ^18.14.6
@@ -4907,6 +4933,7 @@ __metadata:
     "@typescript-eslint/eslint-plugin": ^6.7.2
     "@typescript-eslint/parser": ^6.5.0
     "@vitejs/plugin-react": ^4.0.4
+    "@wagmi/chains": ^1.8.0
     "@wagmi/core": ^1.4.1
     "@zerodev/privy": ^1.0.5
     eslint: ^8.36.0
@@ -4928,7 +4955,7 @@ __metadata:
     vite-plugin-node-polyfills: ^0.14.1
     vite-tsconfig-paths: ^4.2.1
     vitest: 0.34.2
-    wagmi: ^1.4.1
+    wagmi: ^1.4.2
   languageName: unknown
   linkType: soft
 
@@ -9366,7 +9393,7 @@ __metadata:
   languageName: node
   linkType: hard
 
-"wagmi@npm:^1.4.1":
+"wagmi@npm:^1.4.2":
   version: 1.4.2
   resolution: "wagmi@npm:1.4.2"
   dependencies:
