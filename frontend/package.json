@@ -1,0 +1,49 @@
+{
+  "name": "ethglobal-nyc-2023-frontend",
+  "version": "0.1.0",
+  "private": true,
+  "target": "browser",
+  "dependencies": {
+    "@wagmi/core": "^1.4.1",
+    "lodash.clonedeep": "^4.5.0",
+    "react": "^18.2.0",
+    "react-dom": "^18.2.0",
+    "viem": "^1.0.0",
+    "wagmi": "^1.4.1"
+  },
+  "scripts": {
+    "compile": "yarn tsc",
+    "start": "vite",
+    "build": "yarn tsc && vite build",
+    "preview": "vite preview",
+    "format": "prettier -cw .",
+    "lint": "yarn codegen && eslint .",
+    "test": "vitest run",
+    "test:watch": "vitest watch"
+  },
+  "devDependencies": {
+    "@julr/vite-plugin-validate-env": "^0.2.4",
+    "@tanstack/react-query": "^4.24.4",
+    "@types/lodash": "^4.14.187",
+    "@types/node": "^18.14.6",
+    "@types/react": "^18.2.0",
+    "@types/react-dom": "^18.0.10",
+    "@typescript-eslint/eslint-plugin": "^6.7.2",
+    "@typescript-eslint/parser": "^6.5.0",
+    "@vitejs/plugin-react": "^4.0.4",
+    "eslint": "^8.36.0",
+    "eslint-config-prettier": "^9.0.0",
+    "eslint-import-resolver-typescript": "^3.6.0",
+    "eslint-plugin-import": "^2.27.5",
+    "eslint-plugin-prettier": "^4.2.1",
+    "eslint-plugin-react": "^7.28.0",
+    "eslint-plugin-react-hooks": "^4.6.0",
+    "eslint-plugin-react-refresh": "^0.4.3",
+    "jsdom": "^22.1.0",
+    "prettier": "^2.5.1",
+    "typescript": "^5.2.2",
+    "vite": "^4.4.9",
+    "vite-tsconfig-paths": "^4.2.1",
+    "vitest": "0.34.2"
+  }
+}

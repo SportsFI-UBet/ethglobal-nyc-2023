@@ -1,0 +1,11 @@
+
+
+[profile.default]
+solc-version = "0.8.17"
+optimizer = true
+optimizer-runs = 200
+via_ir = false
+
+
+[profile.default.optimizer_details]
+yul = false
