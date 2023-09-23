@@ -3,5 +3,6 @@
 
 interface ImportMetaEnv {
   VITE_PRIVY_APP_ID?: string;
+  VITE_ZERODEV_PROJECT_ID?: string;
   VITE_LOGO?: string;
 }

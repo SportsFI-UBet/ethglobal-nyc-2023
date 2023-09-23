@@ -3,22 +3,21 @@ import reactLogo from "./assets/react.svg";
 import viteLogo from "/vite.svg";
 import "./App.css";
 import { PrivyProvider, User, usePrivy } from "@privy-io/react-auth";
-import { usePrivySmartAccount } from "@zerodev/privy";
+import { ZeroDevProvider, usePrivySmartAccount } from "@zerodev/privy";
 
 const MainPage: React.FC = () => {
-  // const smartAccount = usePrivySmartAccount();
-  const smartAccount = usePrivy();
+  const account = usePrivySmartAccount();
 
-  const address = smartAccount.user?.wallet?.address;
+  const address = account.user?.wallet?.address;
   return (
     <>
-      {!smartAccount.authenticated && (
-        <button onClick={smartAccount.login}>Login</button>
+      {!account.authenticated && (
+        <button onClick={account.login}>Login</button>
       )}
-      {smartAccount.ready && smartAccount.authenticated && (
+      {account.ready && account.authenticated && (
         <>
           <div>Authenticated!</div>
-          <button onClick={smartAccount.logout}>Logout</button>
+          <button onClick={account.logout}>Logout</button>
         </>
       )}
       {!!address && <div>Address {address}</div>}
@@ -51,24 +50,32 @@ function App() {
   return (
     <>
       <Header></Header>
-      <PrivyProvider
-        appId={import.meta.env.VITE_PRIVY_APP_ID ?? "BORK"}
-        onSuccess={handleLogin}
-        config={{
-          loginMethods: ["email", "wallet", "google", "twitter"],
-          appearance: {
-            theme: "light",
-            accentColor: "#676FFF",
-            logo: import.meta.env.VITE_LOGO,
-            showWalletLoginFirst: false,
-          },
-          fiatOnRamp: {
-            useSandbox: true,
-          },
-        }}
+      <ZeroDevProvider
+        projectId={import.meta.env.VITE_ZERODEV_PROJECT_ID ?? "BORK"}
       >
-        <MainPage></MainPage>
-      </PrivyProvider>
+        <PrivyProvider
+          appId={import.meta.env.VITE_PRIVY_APP_ID ?? "BORK"}
+          onSuccess={handleLogin}
+          config={{
+            loginMethods: ["email", "wallet", "google", "twitter"],
+            appearance: {
+              theme: "light",
+              accentColor: "#676FFF",
+              logo: import.meta.env.VITE_LOGO,
+              showWalletLoginFirst: false,
+            },
+            fiatOnRamp: {
+              useSandbox: true,
+            },
+            embeddedWallets: {
+              createOnLogin: "users-without-wallets",
+              noPromptOnSignature: false,
+            },
+          }}
+        >
+          <MainPage></MainPage>
+        </PrivyProvider>
+      </ZeroDevProvider>
     </>
   );
 }
