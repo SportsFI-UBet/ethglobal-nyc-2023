@@ -1,15 +1,23 @@
 import React from "react";
-import reactLogo from "./assets/react.svg";
-import viteLogo from "/vite.svg";
 import "./App.css";
-import { PrivyProvider, User, PrivyClientConfig } from "@privy-io/react-auth";
+import {
+  PrivyProvider,
+  User,
+  PrivyClientConfig,
+  useWallets,
+} from "@privy-io/react-auth";
 import { ZeroDevProvider, usePrivySmartAccount } from "@zerodev/privy";
 
-import { PrivyWagmiConnector } from "@privy-io/wagmi-connector";
+import { PrivyWagmiConnector, usePrivyWagmi } from "@privy-io/wagmi-connector";
 // You can import additional chains from 'wagmi/chains'
 // https://wagmi.sh/react/chains
 import { polygonMumbai } from "@wagmi/chains";
-import { configureChains } from "wagmi";
+import {
+  Address,
+  useAccount,
+  configureChains,
+  useBalance,
+} from "wagmi";
 // You may replace this with your preferred providers
 // https://wagmi.sh/react/providers/configuring-chains#multiple-providers
 import { publicProvider } from "wagmi/providers/public";
@@ -21,8 +29,28 @@ const configureChainsConfig = configureChains(
   [publicProvider()]
 );
 
+const FundsComponent: React.FC<{ tokenAddress: Address }> = ({
+  tokenAddress,
+}) => {
+  const account = useAccount();
+  const balance = useBalance({
+    address: account.address,
+    token: tokenAddress,
+  });
+
+  return (
+    <>
+      <span>{balance.data?.formatted}</span>
+      <span></span>
+    </>
+  );
+};
+
 const MainPage: React.FC = () => {
   const account = usePrivySmartAccount();
+
+  const { wallets } = useWallets();
+  const { wallet: activeWallet, setActiveWallet } = usePrivyWagmi();
 
   const address = account.user?.wallet?.address;
   return (
@@ -35,23 +63,13 @@ const MainPage: React.FC = () => {
         </>
       )}
       {!!address && <div>Address {address}</div>}
+      {!!activeWallet && <div>ActiveWallet {activeWallet.address}</div>}
     </>
   );
 };
 
 const Header: React.FC = () => {
-  return (
-    <>
-      <div>
-        <a href="https://vitejs.dev" target="_blank">
-          <img src={viteLogo} className="logo" alt="Vite logo" />
-        </a>
-        <a href="https://react.dev" target="_blank">
-          <img src={reactLogo} className="logo react" alt="React logo" />
-        </a>
-      </div>
-    </>
-  );
+  return <></>;
 };
 
 const handleLogin = (user: User) => {
