@@ -5,7 +5,9 @@
   "target": "browser",
   "type": "module",
   "dependencies": {
+    "@privy-io/react-auth": "^1.40.3",
     "@wagmi/core": "^1.4.1",
+    "@zerodev/privy": "^1.0.5",
     "lodash.clonedeep": "^4.5.0",
     "react": "^18.2.0",
     "react-dom": "^18.2.0",
